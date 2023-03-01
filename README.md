@@ -1,15 +1,7 @@
-# 🚀 Welcome to your new awesome project!
+# 🚀 3D Quest
 
-This project has been created using **webpack-cli**, you can now run
-
+use 
 ```
-npm run build
+yarn start
 ```
-
-or
-
-```
-yarn build
-```
-
-to bundle your application
+to start application
