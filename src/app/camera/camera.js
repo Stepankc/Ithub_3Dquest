@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import { scene } from "../scene/scene";
 
 //sizes
 export const sizes = {
@@ -13,5 +14,4 @@ export const camera = new THREE.PerspectiveCamera(
   100
 );
 camera.position.set(0, 0, 3);
-camera.lookAt(mesh.position);
 scene.add(camera);

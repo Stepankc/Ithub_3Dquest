@@ -7,8 +7,6 @@ export const App = () => {
   //canvas
   const canvas = document.querySelector("canvas.webgl");
 
-  scene.add(camera);
-
   window.addEventListener("resize", () => {
     //update sizes
     sizes.width = window.innerWidth;
