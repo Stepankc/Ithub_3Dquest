@@ -1,4 +1,11 @@
 import * as THREE from "three";
+
+//sizes
+export const sizes = {
+  width: window.innerWidth,
+  height: window.innerHeight,
+};
+
 export const camera = new THREE.PerspectiveCamera(
   50,
   sizes.width / sizes.height,

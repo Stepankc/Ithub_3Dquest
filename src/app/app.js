@@ -1,16 +1,13 @@
 import "./app.module.scss";
 import * as THREE from "three";
 import { scene } from "./scene/scene";
+import { camera,sizes } from "./camera/camera";
 
 export const App = () => {
   //canvas
   const canvas = document.querySelector("canvas.webgl");
 
-  //sizes
-  const sizes = {
-    width: window.innerWidth,
-    height: window.innerHeight,
-  };
+  scene.add(camera);
 
   window.addEventListener("resize", () => {
     //update sizes
