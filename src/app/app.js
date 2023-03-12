@@ -68,37 +68,15 @@ export const App = () => {
 
   const renderer = new THREE.WebGLRenderer({
     canvas: canvas,
+    antialias: true,
   });
   renderer.setSize(sizes.width, sizes.height);
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-  // const controls = new FirstPersonControls(camera, document.body)
-  // controls.lookSpeed = 0.8;
-  // controls.movementSpeed = 5;
-  
-//   const control = new PointerLockControls( camera, document.body );
-
-// // add event listener to show/hide a UI (e.g. the game's menu)
-
-// control.addEventListener( 'lock', function () {
-
-// 	menu.style.display = 'none';
-
-// } );
-
-// control.addEventListener( 'unlock', function () {
-
-// 	menu.style.display = 'block';
-
-// } );
-
   const controls = new OrbitControls(camera, canvas);
   controls.enableDamping = true;
 
-  const clock = new THREE.Clock();
-
   const rate = () => {
-    
     controls.update();
 
     //render
@@ -108,6 +86,4 @@ export const App = () => {
   };
 
   rate();
-  //render
-  renderer.render(scene, camera);
 };
