@@ -3,11 +3,19 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn lint"
+    }
+  },
   "scripts": {
     "dev": "vite",
-    "build": "vite build"
+    "build": "vite build",
+    "lint": "yarn prettier --write ."
   },
   "devDependencies": {
+    "husky": "^8.0.3",
+    "prettier": "^2.8.5",
     "sass": "^1.59.3",
     "vite": "^4.0.4"
   },
