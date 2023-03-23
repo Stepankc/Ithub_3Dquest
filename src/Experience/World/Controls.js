@@ -19,72 +19,48 @@ export default class Controls extends EventEmitter {
     this.keyboard = {
       events: {
         keyDown: (_event) => {
-          switch (_event.key) {
+          switch (_event.code) {
             case "ArrowUp":
-            case "w":
-            case "W":
-            case "ц":
-            case "Ц":
+            case "KeyW":
               this.actions.up = true;
               break;
 
             case "ArrowRight":
-            case "d":
-            case "D":
-            case "в":
-            case "В":
+            case "KeyD":
               this.actions.right = true;
               break;
 
             case "ArrowDown":
-            case "s":
-            case "S":
-            case "ы":
-            case "Ы":
+            case "KeyS":
               this.actions.down = true;
               break;
 
             case "ArrowLeft":
-            case "a":
-            case "A":
-            case "ф":
-            case "Ф":
+            case "KeyA":
               this.actions.left = true;
               break;
           }
         },
 
         keyUp: (_event) => {
-          switch (_event.key) {
+          switch (_event.code) {
             case "ArrowUp":
-            case "w":
-            case "W":
-            case "ц":
-            case "Ц":
+            case "KeyW":
               this.actions.up = false;
               break;
 
             case "ArrowRight":
-            case "d":
-            case "D":
-            case "в":
-            case "В":
+            case "KeyD":
               this.actions.right = false;
               break;
 
             case "ArrowDown":
-            case "s":
-            case "S":
-            case "ы":
-            case "Ы":
+            case "KeyS":
               this.actions.down = false;
               break;
 
             case "ArrowLeft":
-            case "a":
-            case "A":
-            case "ф":
-            case "Ф":
+            case "KeyA":
               this.actions.left = false;
               break;
 
