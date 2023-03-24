@@ -1,5 +1,6 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
+import { PointerLockControls } from "three/examples/jsm/controls/PointerLockControls.js";
 import Experience from "./Experience.js";
 
 export default class camera {
@@ -8,12 +9,18 @@ export default class camera {
     this.sizes = this.experience.sizes;
     this.scene = this.experience.scene;
     this.canvas = this.experience.canvas;
+    this.debug = this.experience.debug;
+
+    //Debug
+    if (this.debug.active) {
+      this.debugFolder = this.debug.ui.addFolder("Camera");
+    }
 
     //add Camera
     this.setInstance();
 
     //add Controls
-    this.setOrbitControls();
+    this.setPointerLockControls();
   }
 
   setInstance() {
@@ -25,11 +32,31 @@ export default class camera {
     );
     this.instance.position.set(0, 3, 15);
     this.scene.add(this.instance);
+
+    //Debug
+    if (this.debug.active) {
+      this.debugFolder
+      .add(this.instance, 'fov')
+      .name("fov")
+      .min(30)
+      .max(100)
+      .step(0.01)
+      .onChange(()=>{
+        this.instance.updateProjectionMatrix()
+      })
+    }
+
+    
+
+
   }
 
-  setOrbitControls() {
-    this.controls = new OrbitControls(this.instance, this.canvas);
-    this.controls.enableDamping = true;
+  setPointerLockControls() {
+    this.firstConrol = new PointerLockControls(this.instance, this.canvas);
+    this.canvas.addEventListener("click", () => {
+      this.firstConrol.lock();
+    });
+    this.scene.add(this.firstConrol.getObject());
   }
 
   resize() {
@@ -37,7 +64,5 @@ export default class camera {
     this.instance.updateProjectionMatrix();
   }
 
-  update() {
-    this.controls.update();
-  }
+  update(){}
 }

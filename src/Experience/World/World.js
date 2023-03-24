@@ -1,15 +1,18 @@
 import * as THREE from "three";
 import Experience from "../Experience.js";
+import Controls from "./controls.js";
 import Environment from "./Environment.js";
 import Floor from "./Floor.js";
 import Fox from "./Fox.js";
 import Raycaster from "./Raycaster.js";
+import Hero from "./Hero.js";
 
 export default class World {
   constructor() {
     this.experience = new Experience();
     this.scene = this.experience.scene;
     this.resources = this.experience.resources;
+    this.controls = new Controls();
 
     // test meshes
     const testMesh = new THREE.Mesh(
@@ -37,6 +40,7 @@ export default class World {
       this.raycaster = new Raycaster();
       // this.fox = new Fox();
       this.environment = new Environment();
+      this.hero = new Hero();
     });
   }
   update() {
