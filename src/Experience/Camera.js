@@ -8,6 +8,12 @@ export default class camera {
     this.sizes = this.experience.sizes;
     this.scene = this.experience.scene;
     this.canvas = this.experience.canvas;
+    this.debug = this.experience.debug;
+
+    //Debug
+    if (this.debug.active) {
+      this.debugFolder = this.debug.ui.addFolder("Camera");
+    }
 
     //add Camera
     this.setInstance();
@@ -25,6 +31,23 @@ export default class camera {
     );
     this.instance.position.set(0, 3, 15);
     this.scene.add(this.instance);
+
+    //Debug
+    if (this.debug.active) {
+      this.debugFolder
+      .add(this.instance, 'fov')
+      .name("fov")
+      .min(30)
+      .max(100)
+      .step(0.01)
+      .onChange(()=>{
+        this.instance.updateProjectionMatrix()
+      })
+    }
+
+    
+
+
   }
 
   setOrbitControls() {
