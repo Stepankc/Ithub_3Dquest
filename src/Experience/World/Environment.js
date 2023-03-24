@@ -11,10 +11,11 @@ export default class Environment {
     //Debug
     if (this.debug.active) {
       this.debugFolder = this.debug.ui.addFolder("Environment");
+      this.debugFolder1 = this.debug.ui.addFolder("Light");
     }
 
     this.setSunLight();
-    // this.setAmbientLight();
+    //this.setAmbientLight();
 
     //for future
     this.setEnvironmentMap();
@@ -28,6 +29,43 @@ export default class Environment {
     this.sunLight.shadow.normalBias = 0.05;
     this.sunLight.position.set(3, 3, -2.25);
     this.scene.add(this.sunLight);
+
+    //add debug
+    if (this.debug.active) {
+      this.debugFolder1
+        .add(this.sunLight.position, "x")
+        .name("x")
+        .max(20)
+        .min(-20)
+        .step(0.01);
+    }
+
+    if (this.debug.active) {
+      this.debugFolder1
+        .add(this.sunLight.position, "y")
+        .name("y")
+        .max(20)
+        .min(-20)
+        .step(0.01);
+    }
+
+    if (this.debug.active) {
+      this.debugFolder1
+        .add(this.sunLight.position, "z")
+        .name("z")
+        .min(20)
+        .max(-20)
+        .step(0.01);
+    }
+
+    if (this.debug.active) {
+      this.debugFolder1
+        .add(this.sunLight, "intensity")
+        .name("intensity")
+        .min(0)
+        .max(20)
+        .step(0.001);
+    }
   }
 
   setAmbientLight() {
