@@ -1,5 +1,6 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
+import { PointerLockControls } from "three/examples/jsm/controls/PointerLockControls.js";
 import Experience from "./Experience.js";
 
 export default class camera {
@@ -19,7 +20,7 @@ export default class camera {
     this.setInstance();
 
     //add Controls
-    this.setOrbitControls();
+    this.setPointerLockControls();
   }
 
   setInstance() {
@@ -50,9 +51,12 @@ export default class camera {
 
   }
 
-  setOrbitControls() {
-    this.controls = new OrbitControls(this.instance, this.canvas);
-    this.controls.enableDamping = true;
+  setPointerLockControls() {
+    this.firstConrol = new PointerLockControls(this.instance, this.canvas);
+    this.canvas.addEventListener("click", () => {
+      this.firstConrol.lock();
+    });
+    this.scene.add(this.firstConrol.getObject());
   }
 
   resize() {
@@ -60,7 +64,5 @@ export default class camera {
     this.instance.updateProjectionMatrix();
   }
 
-  update() {
-    this.controls.update();
-  }
+  update(){}
 }
