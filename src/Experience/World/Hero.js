@@ -19,9 +19,9 @@ export default class Hero {
   setMove() {
     this.time.on("tick", () => {
       this.movement.velocity.x -=
-        (this.movement.velocity.x * 10.0 * this.delta) / 1000;
+        (this.movement.velocity.x * 10.0 * this.delta) / 1500;
       this.movement.velocity.z -=
-        (this.movement.velocity.z * 10.0 * this.delta) / 1000;
+        (this.movement.velocity.z * 10.0 * this.delta) / 1500;
 
       this.movement.direction.z =
         Number(this.actions.up) - Number(this.actions.down);
@@ -32,14 +32,14 @@ export default class Hero {
 
       if (this.actions.up || this.actions.down)
         this.movement.velocity.z -=
-          (this.movement.direction.z * 400.0 * this.delta) / 1000;
+          (this.movement.direction.z * 400.0 * this.delta) / 1500;
       if (this.actions.left || this.actions.right)
         this.movement.velocity.x -=
-          (this.movement.direction.x * 400.0 * this.delta) / 1000;
+          (this.movement.direction.x * 400.0 * this.delta) / 1500;
 
-      this.controls.moveRight((-this.movement.velocity.x * this.delta) / 1000);
+      this.controls.moveRight((-this.movement.velocity.x * this.delta) / 1500);
       this.controls.moveForward(
-        (-this.movement.velocity.z * this.delta) / 1000
+        (-this.movement.velocity.z * this.delta) / 1500
       );
     });
   }
