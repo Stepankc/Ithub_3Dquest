@@ -15,10 +15,10 @@ export default class Environment {
     }
 
     this.setSunLight();
-    //this.setAmbientLight();
+    this.setAmbientLight();
 
     //for future
-    this.setEnvironmentMap();
+    // this.setEnvironmentMap();
   }
 
   setSunLight() {
@@ -30,38 +30,29 @@ export default class Environment {
     this.sunLight.position.set(3, 3, -2.25);
     this.scene.add(this.sunLight);
 
-    //add debug
+    //Debug
     if (this.debug.active) {
       this.debugFolder1
         .add(this.sunLight.position, "x")
         .name("x")
-        .max(20)
         .min(-20)
+        .max(20)
         .step(0.01);
-    }
-
-    if (this.debug.active) {
       this.debugFolder1
         .add(this.sunLight.position, "y")
         .name("y")
-        .max(20)
         .min(-20)
+        .max(20)
         .step(0.01);
-    }
-
-    if (this.debug.active) {
       this.debugFolder1
         .add(this.sunLight.position, "z")
         .name("z")
-        .min(20)
-        .max(-20)
+        .min(-20)
+        .max(20)
         .step(0.01);
-    }
-
-    if (this.debug.active) {
       this.debugFolder1
         .add(this.sunLight, "intensity")
-        .name("intensity")
+        .name("DirectIntensity")
         .min(0)
         .max(20)
         .step(0.001);
@@ -71,6 +62,16 @@ export default class Environment {
   setAmbientLight() {
     this.light = new THREE.AmbientLight(0xffffff);
     this.scene.add(this.light);
+
+    //Debug
+    if (this.debug.active) {
+      this.debugFolder1
+        .add(this.sunLight, "intensity")
+        .name("AmbientIntensity")
+        .min(0)
+        .max(20)
+        .step(0.001);
+    }
   }
 
   //it may be useful for further use
