@@ -16,7 +16,13 @@ export default class Raycaster {
     this.pointer = new THREE.Vector2();
     this.resize();
     this.pointer.cross;
-    this.INTERSECTED = null;
+    this.intersect = null;
+
+    this.radius = new THREE.Mesh(
+      new THREE.SphereGeometry(6, 20, 20),
+      (new THREE.Material().transparent = true),
+      (new THREE.Material().opacity = 0.0)
+    );
 
     console.log(this.pointer);
 
@@ -27,6 +33,8 @@ export default class Raycaster {
     this.time.on("tick", () => {
       this.render();
     });
+
+    this.drag();
 
     // this.render();
   }
@@ -40,18 +48,46 @@ export default class Raycaster {
     // update the picking ray with the camera and pointer position
     this.raycaster.setFromCamera(this.pointer, this.camera.instance);
 
+    this.radius.position.x = this.camera.instance.position.x;
+    this.radius.position.y = this.camera.instance.position.y;
+    this.radius.position.z = this.camera.instance.position.z;
+
+    if (this.intersect != null) {
+      for (let o of this.intersects) {
+        if (o.object == this.radius) {
+          this.intersect.position.x = o.point.x;
+          this.intersect.position.y = o.point.y;
+          this.intersect.position.z = o.point.z;
+        }
+      }
+    }
+
     this.intersects = this.raycaster.intersectObjects(
       this.scene.children,
       false
     );
-
-    if (this.intersects.length > 0) {
-      var intersect = this.intersects[0].object;
-      console.log(intersect);
-      intersect.material.emissive.setHex(0xff0000);
-    }
   }
+
   update() {
     this.raycaster.update();
+  }
+
+  drag() {
+    var dragging = false;
+
+    window.addEventListener("click", (event) => {
+      if (this.intersects.length > 0) {
+        if (!dragging) {
+          this.intersect = this.intersects[0].object;
+          console.log(this.intersect);
+          this.scene.add(this.radius);
+          dragging = true;
+        } else {
+          this.scene.remove(this.radius);
+          this.intersect = null;
+          dragging = false;
+        }
+      }
+    });
   }
 }

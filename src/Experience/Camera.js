@@ -36,19 +36,15 @@ export default class camera {
     //Debug
     if (this.debug.active) {
       this.debugFolder
-      .add(this.instance, 'fov')
-      .name("fov")
-      .min(30)
-      .max(100)
-      .step(0.01)
-      .onChange(()=>{
-        this.instance.updateProjectionMatrix()
-      })
+        .add(this.instance, "fov")
+        .name("fov")
+        .min(30)
+        .max(100)
+        .step(0.01)
+        .onChange(() => {
+          this.instance.updateProjectionMatrix();
+        });
     }
-
-    
-
-
   }
 
   setPointerLockControls() {
@@ -64,5 +60,5 @@ export default class camera {
     this.instance.updateProjectionMatrix();
   }
 
-  update(){}
+  update() {}
 }
