@@ -1,13 +1,27 @@
+@mixin aim-sight($size) {
+  left: calc(50vw - $size / 2);
+  top: calc(50vh - $size / 2);
+  width: $size;
+  height: $size;
+}
+
 * {
   margin: 0;
   padding: 0;
 }
+
 .webgl {
   position: fixed;
   top: 0;
   left: 0;
   outline: none;
 }
+
+img {
+  position: absolute;
+  @include aim-sight(8px)
+}
+
 html,
 body {
   overflow: hidden;
