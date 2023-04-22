@@ -55,9 +55,11 @@ export default class Raycaster {
     if (this.intersect != null) {
       for (let o of this.intersects) {
         if (o.object == this.radius) {
-          this.intersect.position.x = o.point.x;
-          this.intersect.position.y = o.point.y;
-          this.intersect.position.z = o.point.z;
+          let targetPos = new THREE.Vector3(this.camera.instance.position.x,
+                                            this.intersect.position.y,
+                                            this.camera.instance.position.z)
+          this.intersect.lookAt(targetPos)
+          this.intersect.position.lerp(o.point, 0.15);
         }
       }
     }
