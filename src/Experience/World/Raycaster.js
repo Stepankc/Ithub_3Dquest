@@ -81,9 +81,11 @@ export default class Raycaster {
       if (this.intersects.length > 0) {
         if (!dragging) {
           this.intersect = this.intersects[0].object;
-          console.log(this.intersect);
-          this.scene.add(this.radius);
-          dragging = true;
+          if (this.intersect.userData == "draggable") {
+            console.log(this.intersect);
+            this.scene.add(this.radius);
+            dragging = true;
+          }
         } else {
           this.scene.remove(this.radius);
           this.intersect = null;
