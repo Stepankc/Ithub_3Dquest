@@ -35,6 +35,7 @@ export default class Raycaster {
     });
 
     this.drag();
+    this.scene.add(this.radius);
 
     // this.render();
   }
@@ -55,9 +56,11 @@ export default class Raycaster {
     if (this.intersect != null) {
       for (let o of this.intersects) {
         if (o.object == this.radius) {
-          this.intersect.position.x = o.point.x;
-          this.intersect.position.y = o.point.y;
-          this.intersect.position.z = o.point.z;
+          let targetPos = new THREE.Vector3(this.camera.instance.position.x,
+                                            this.intersect.position.y,
+                                            this.camera.instance.position.z)
+          this.intersect.lookAt(targetPos)
+          this.intersect.position.lerp(o.point, 0.15);
         }
       }
     }
@@ -73,19 +76,30 @@ export default class Raycaster {
   }
 
   drag() {
+
+    var reset = () => {
+      this.intersect = null;
+      dragging = false;
+    }
+
     var dragging = false;
 
     window.addEventListener("click", (event) => {
       if (this.intersects.length > 0) {
         if (!dragging) {
-          this.intersect = this.intersects[0].object;
-          console.log(this.intersect);
-          this.scene.add(this.radius);
-          dragging = true;
+          if (this.intersects[0].object != this.radius) {
+            this.intersect = this.intersects[0].object;
+          } else {
+            this.intersect = this.intersects[1].object;
+          }
+          if (this.intersect.userData == "draggable") {
+            console.log(this.intersect);
+            dragging = true;
+          } else {
+            reset()
+          }
         } else {
-          this.scene.remove(this.radius);
-          this.intersect = null;
-          dragging = false;
+          reset()
         }
       }
     });
