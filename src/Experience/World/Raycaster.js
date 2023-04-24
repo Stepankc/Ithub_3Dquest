@@ -35,6 +35,7 @@ export default class Raycaster {
     });
 
     this.drag();
+    this.scene.add(this.radius);
 
     // this.render();
   }
@@ -75,21 +76,30 @@ export default class Raycaster {
   }
 
   drag() {
+
+    var reset = () => {
+      this.intersect = null;
+      dragging = false;
+    }
+
     var dragging = false;
 
     window.addEventListener("click", (event) => {
       if (this.intersects.length > 0) {
         if (!dragging) {
-          this.intersect = this.intersects[0].object;
+          if (this.intersects[0].object != this.radius) {
+            this.intersect = this.intersects[0].object;
+          } else {
+            this.intersect = this.intersects[1].object;
+          }
           if (this.intersect.userData == "draggable") {
             console.log(this.intersect);
-            this.scene.add(this.radius);
             dragging = true;
+          } else {
+            reset()
           }
         } else {
-          this.scene.remove(this.radius);
-          this.intersect = null;
-          dragging = false;
+          reset()
         }
       }
     });
