@@ -8,15 +8,15 @@ import Debug from "./Utils/Debug.js";
 import Resources from "./Utils/Resources.js";
 import sources from "./sources.js";
 
-let instance = null;
-
 export default class Experience {
+  static instance = null;
+
   constructor(canvas) {
-    if (instance) {
-      return instance;
+    if (Experience.instance) {
+      return Experience.instance;
     }
 
-    instance = this;
+    Experience.instance = this;
 
     //Global access
     window.experience = this;
