@@ -1,12 +1,11 @@
-import * as THREE from "three";
 import Experience from "../Experience.js";
 import Floor from "./Floor.js";
 import Map from "./Map.js";
-import Controls from "./controls.js";
+import Controls from "./Controls.js";
 import Environment from "./Environment.js";
 import Fox from "./Fox.js";
-import Hero from "./Hero.js";
 import Zones from "./Zones/Zones.js";
+import Physics from "./Physics.js";
 
 export default class World {
   constructor() {
@@ -27,9 +26,9 @@ export default class World {
     this.setFloor();
     this.setFox();
     this.setZones();
-    this.setHero();
     this.setEnvironment();
     this.setMap();
+    this.setPhysics();
   }
   setFloor() {
     this.floor = new Floor();
@@ -44,12 +43,12 @@ export default class World {
   setEnvironment() {
     this.environment = new Environment();
   }
-  setHero() {
-    this.hero = new Hero();
-  }
   setMap() {
     this.map = new Map();
     this.scene.add(this.map.container);
+  }
+  setPhysics() {
+    this.physics = new Physics();
   }
   update() {
     if (this.fox) this.fox.update();
