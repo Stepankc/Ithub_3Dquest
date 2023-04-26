@@ -3,13 +3,23 @@ import Experience from "../Experience";
 
 export default class Map {
   experience = new Experience();
-  scene = this.experience.scene
+  scene = this.experience.scene;
   zones = this.experience.world.zones;
+  resources = this.experience.resources;
+  
   constructor() {
     this.container = new THREE.Object3D();
     this.container.matrixAutoUpdate = false;
     this.setTriggerMesh();
     this.setZones();
+    this.setMainMap();
+  }
+  setMainMap() {
+    this.store = this.resources.items.storeModel.scene;
+    console.log(this.store);
+    this.scene.add(this.store);
+    this.store.scale.set(0.55, 0.25, 0.55);
+    this.store.position.set(-1,-10,0)
   }
   setTriggerMesh() {
     //test mesh
