@@ -15,7 +15,7 @@ export default class Controls extends EventEmitter {
       brake: false,
     };
   }
-  setKeyboardControls() {
+  setKeyboardControls() { 
     this.keyboard = {
       events: {
         keyDown: (_event) => {

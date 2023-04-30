@@ -85,15 +85,15 @@ export default class Raycaster {
     var dragging = false;
 
     window.addEventListener("click", (event) => {
-      if (this.intersects.length > 0 && !dragging) {
+      if (this.intersects.length > 0 && !dragging && event.button == 0) {
         for (let i = 0; i < this.intersects.length; i++) {
           if (this.intersects[i].object.userData == "draggable") {
             this.intersect = this.intersects[i].object;
+            console.log(this.intersect);
             dragging = true;
           }
         }
       } else {
-        console.log(true);
         reset()
       }
     });
