@@ -77,7 +77,7 @@ export default class Raycaster {
 
   drag() {
 
-    var reset = () => {
+    var reset = (e) => {
       this.intersect = null;
       dragging = false;
     }
@@ -85,21 +85,16 @@ export default class Raycaster {
     var dragging = false;
 
     window.addEventListener("click", (event) => {
-      if (this.intersects.length > 0) {
-        if (!dragging) {
-          for (let i = 0; i < this.intersects.length; i++) {
-            if (this.intersects[i].object.userData == "draggable") {
-              this.intersect = this.intersects[i].object;
-              console.log(this.intersect);
-              dragging = true;
-            } else {
-            reset()
-            }
+      if (this.intersects.length > 0 && !dragging) {
+        for (let i = 0; i < this.intersects.length; i++) {
+          if (this.intersects[i].object.userData == "draggable") {
+            this.intersect = this.intersects[i].object;
+            dragging = true;
           }
-          
-        } else {
-          reset()
         }
+      } else {
+        console.log(true);
+        reset()
       }
     });
   }
