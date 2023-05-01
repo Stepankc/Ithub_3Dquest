@@ -19,7 +19,7 @@ export default class Raycaster {
     this.intersect = null;
 
     this.radius = new THREE.Mesh(
-      new THREE.SphereGeometry(6, 20, 20),
+      new THREE.SphereGeometry(2, 20, 20),
       (new THREE.Material().transparent = true),
       (new THREE.Material().opacity = 0.0)
     );
@@ -67,7 +67,7 @@ export default class Raycaster {
 
     this.intersects = this.raycaster.intersectObjects(
       this.scene.children,
-      false
+      true
     );
   }
 
@@ -77,7 +77,7 @@ export default class Raycaster {
 
   drag() {
 
-    var reset = () => {
+    var reset = (e) => {
       this.intersect = null;
       dragging = false;
     }
@@ -85,22 +85,16 @@ export default class Raycaster {
     var dragging = false;
 
     window.addEventListener("click", (event) => {
-      if (this.intersects.length > 0) {
-        if (!dragging) {
-          if (this.intersects[0].object != this.radius) {
-            this.intersect = this.intersects[0].object;
-          } else {
-            this.intersect = this.intersects[1].object;
-          }
-          if (this.intersect.userData == "draggable") {
+      if (this.intersects.length > 0 && !dragging && event.button == 0) {
+        for (let i = 0; i < this.intersects.length; i++) {
+          if (this.intersects[i].object.userData == "draggable") {
+            this.intersect = this.intersects[i].object;
             console.log(this.intersect);
             dragging = true;
-          } else {
-            reset()
           }
-        } else {
-          reset()
         }
+      } else {
+        reset()
       }
     });
   }
