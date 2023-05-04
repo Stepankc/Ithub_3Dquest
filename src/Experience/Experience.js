@@ -7,11 +7,12 @@ import World from "./World/World.js";
 import Debug from "./Utils/Debug.js";
 import Resources from "./Utils/Resources.js";
 import sources from "./sources.js";
+import Stats from "stats.js";
 
 let instance = null;
 
 export default class Experience {
-  constructor(canvas) {
+  constructor(canvas, startScreen) {
     if (instance) {
       return instance;
     }
@@ -21,8 +22,13 @@ export default class Experience {
     //Global access
     window.experience = this;
 
+    //add Stats
+    this.stats = new Stats();
+    document.body.appendChild(this.stats.dom);
+
     //Option
     this.canvas = canvas;
+    this.startScreen = startScreen;
 
     //Setup
     this.debug = new Debug();
@@ -51,6 +57,7 @@ export default class Experience {
   }
 
   update() {
+    this.stats.update()
     this.camera.update();
     this.world.update();
     this.renderer.update();

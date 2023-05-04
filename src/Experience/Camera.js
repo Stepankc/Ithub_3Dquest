@@ -10,6 +10,7 @@ export default class camera {
     this.scene = this.experience.scene;
     this.canvas = this.experience.canvas;
     this.debug = this.experience.debug;
+    this.startScreen = this.experience.startScreen;
 
     //Debug
     if (this.debug.active) {
@@ -36,26 +37,31 @@ export default class camera {
     //Debug
     if (this.debug.active) {
       this.debugFolder
-      .add(this.instance, 'fov')
-      .name("fov")
-      .min(30)
-      .max(100)
-      .step(0.01)
-      .onChange(()=>{
-        this.instance.updateProjectionMatrix()
-      })
+        .add(this.instance, "fov")
+        .name("fov")
+        .min(30)
+        .max(100)
+        .step(0.01)
+        .onChange(() => {
+          this.instance.updateProjectionMatrix();
+        });
     }
-
-    
-
-
   }
 
   setPointerLockControls() {
     this.firstConrol = new PointerLockControls(this.instance, this.canvas);
-    this.canvas.addEventListener("click", () => {
+    this.startScreen.addEventListener("click", () => {
       this.firstConrol.lock();
     });
+
+    this.firstConrol.addEventListener("lock", () => {
+      this.startScreen.style.display = "none";
+    });
+
+    this.firstConrol.addEventListener("unlock", () => {
+      this.startScreen.style.display = "block";
+    });
+
     this.scene.add(this.firstConrol.getObject());
   }
 
@@ -64,5 +70,5 @@ export default class camera {
     this.instance.updateProjectionMatrix();
   }
 
-  update(){}
+  update() {}
 }

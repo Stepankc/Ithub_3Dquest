@@ -8,6 +8,80 @@
   </head>
   <body>
     <canvas class="webgl"></canvas>
+    <div class="screen">
+      <h1 class = "screen-header">3D QUEST</h1>
+      <h4 align="center" class="text" >Move : WASD<br/>
+        Look : MOUSE<br/>
+        Catch: RIGHT MOUSE BUTTON
+      </h4>
+      Catch : RIGHT MOUSE BUTTON
+      <h2 class="screen-footer neonText">TAP TO START</h2>
+    </div>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@1,300&family=Montserrat:wght@300&family=Poppins:wght@200&display=swap');
+
+.container{
+    padding : 20px;
+    margin : 100px auto;
+    display : grid;
+  }
+
+  .screen{
+    cursor : pointer;
+    position : fixed;
+    display: block;
+    top : 50%;
+    left : 50%;
+    height : 100%;
+    width : 100%;
+    transform : translate(-50%,-50%);    
+    background-color: rgba(0, 0, 0, 0.897);
+    transition : all ease-in-out 600ms;
+  }
+  .hidden{
+    transition : 0.5s;
+    display : none;
+  }
+  .screen-header {
+    height : 25%;
+    color : #DDDDDD;
+    font-family: 'Lato', sans-serif;
+    font-family: 'Montserrat', sans-serif;
+    font-family: 'Poppins', sans-serif;
+    font-size : 60px;
+    display : flex;
+    justify-content: center;
+    align-items : center;
+  }
+  
+  .text {
+    height : 65%;
+    color : #DDDDDD;
+    font-family: 'Lato', sans-serif;
+    font-family: 'Montserrat', sans-serif;
+    font-family: 'Poppins', sans-serif;
+    font-size : 25px;
+    display : flex;
+    justify-content: center;
+    align-items : center;
+  }
+  
+  body {
+    background-color: rgba(71, 71, 71, 0);
+  }
+  
+  .screen-footer{
+    height : 0%;
+    color : #ffffff;
+    font-family: 'Lato', sans-serif;
+    font-family: 'Montserrat', sans-serif;
+    font-family: 'Poppins', sans-serif;
+    font-size : 40px;
+    display : flex;
+    justify-content: center;
+    align-items : center;
+  }
+    </style>
     <script type="module" src="./index.js"></script>
   </body>
 </html>
