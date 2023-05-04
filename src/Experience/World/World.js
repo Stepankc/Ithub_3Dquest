@@ -1,3 +1,4 @@
+import * as THREE from "three";
 import Experience from "../Experience.js";
 import Floor from "./Floor.js";
 import Map from "./Map.js";

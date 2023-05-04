@@ -10,6 +10,7 @@ export default class camera {
     this.scene = this.experience.scene;
     this.canvas = this.experience.canvas;
     this.debug = this.experience.debug;
+    this.startScreen = this.experience.startScreen;
 
     //Debug
     if (this.debug.active) {
@@ -49,9 +50,18 @@ export default class camera {
 
   setPointerLockControls() {
     this.firstConrol = new PointerLockControls(this.instance, this.canvas);
-    this.canvas.addEventListener("click", () => {
+    this.startScreen.addEventListener("click", () => {
       this.firstConrol.lock();
     });
+
+    this.firstConrol.addEventListener("lock", () => {
+      this.startScreen.style.display = "none";
+    });
+
+    this.firstConrol.addEventListener("unlock", () => {
+      this.startScreen.style.display = "block";
+    });
+
     this.scene.add(this.firstConrol.getObject());
   }
 
