@@ -26,4 +26,9 @@ export default [
     type: "gltfModel",
     path: "models/Fox/glTF/Fox.gltf",
   },
+  {
+    name: "storeModel",
+    type: "gltfModel",
+    path: "models/store1.glb",
+  },
 ];

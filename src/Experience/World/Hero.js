@@ -4,9 +4,8 @@ export default class Hero {
   constructor() {
     this.experience = new Experience();
     this.delta = this.experience.time.delta;
-    this.controls = this.experience.camera.firstConrol;
     this.actions = this.experience.world.controls.actions;
-    this.time = this.experience.time;
+    this.camera = this.experience.camera.instance;
     this.setMovement();
     this.setMove();
   }
@@ -16,31 +15,37 @@ export default class Hero {
       direction: new THREE.Vector3(),
     };
   }
+  getForwardVector() {
+    this.camera.getWorldDirection(this.movement.direction);
+    this.movement.direction.y = 0;
+    this.movement.direction.normalize();
+    return this.movement.direction;
+  }
+
+  getSideVector() {
+    this.camera.getWorldDirection(this.movement.direction);
+    this.movement.direction.y = 0;
+    this.movement.direction.normalize();
+    this.movement.direction.cross(this.camera.up);
+
+    return this.movement.direction;
+  }
   setMove() {
-    this.time.on("tick", () => {
-      this.movement.velocity.x -=
-        (this.movement.velocity.x * 10.0 * this.delta) / 1000;
-      this.movement.velocity.z -=
-        (this.movement.velocity.z * 10.0 * this.delta) / 1000;
-
-      this.movement.direction.z =
-        Number(this.actions.up) - Number(this.actions.down);
-      this.movement.direction.x =
-        Number(this.actions.right) - Number(this.actions.left);
-
-      this.movement.direction.normalize();
-
-      if (this.actions.up || this.actions.down)
-        this.movement.velocity.z -=
-          (this.movement.direction.z * 400.0 * this.delta) / 1000;
-      if (this.actions.left || this.actions.right)
-        this.movement.velocity.x -=
-          (this.movement.direction.x * 400.0 * this.delta) / 1000;
-
-      this.controls.moveRight((-this.movement.velocity.x * this.delta) / 1000);
-      this.controls.moveForward(
-        (-this.movement.velocity.z * this.delta) / 1000
+    if (this.actions.up)
+      this.movement.velocity.add(
+        this.getForwardVector().multiplyScalar(this.delta / 100)
       );
-    });
+    if (this.actions.down)
+      this.movement.velocity.add(
+        this.getForwardVector().multiplyScalar(-this.delta / 100)
+      );
+    if (this.actions.left)
+      this.movement.velocity.add(
+        this.getSideVector().multiplyScalar(-this.delta / 100)
+      );
+    if (this.actions.right)
+      this.movement.velocity.add(
+        this.getSideVector().multiplyScalar(this.delta / 100)
+      );
   }
 }

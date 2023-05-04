@@ -15,7 +15,7 @@ export default class Controls extends EventEmitter {
       brake: false,
     };
   }
-  setKeyboardControls() {
+  setKeyboardControls() { 
     this.keyboard = {
       events: {
         keyDown: (_event) => {
@@ -63,7 +63,6 @@ export default class Controls extends EventEmitter {
             case "KeyA":
               this.actions.left = false;
               break;
-
           }
         },
       },

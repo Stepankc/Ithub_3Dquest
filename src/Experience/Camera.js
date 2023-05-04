@@ -41,7 +41,7 @@ export default class camera {
         .name("fov")
         .min(30)
         .max(100)
-        .step(0.01)
+        .step(1)
         .onChange(() => {
           this.instance.updateProjectionMatrix();
         });

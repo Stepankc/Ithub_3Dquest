@@ -9,15 +9,15 @@ import Resources from "./Utils/Resources.js";
 import sources from "./sources.js";
 import Stats from "stats.js";
 
-let instance = null;
-
 export default class Experience {
-  constructor(canvas, startScreen) {
-    if (instance) {
-      return instance;
+  static instance = null;
+
+  constructor(canvas,startScreen) {
+    if (Experience.instance) {
+      return Experience.instance;
     }
 
-    instance = this;
+    Experience.instance = this;
 
     //Global access
     window.experience = this;
