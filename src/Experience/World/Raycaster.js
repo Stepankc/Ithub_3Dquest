@@ -89,6 +89,7 @@ export default class Raycaster {
         for (let i = 0; i < this.intersects.length; i++) {
           if (this.intersects[i].object.userData == "draggable") {
             this.intersect = this.intersects[i].object;
+            this.intersect.geometry.rotateY(Math.abs(this.intersect.quaternion.y) - Math.abs(this.camera.instance.quaternion.y));
             console.log(this.intersect);
             dragging = true;
           }
