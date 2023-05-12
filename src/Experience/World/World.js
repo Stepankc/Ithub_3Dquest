@@ -31,7 +31,7 @@ export default class World {
         new THREE.BoxGeometry(1, 1, 1),
         new THREE.MeshStandardMaterial({ color: Math.random() * 0xffffff })
       );
-      testMesh.userData = "draggable";
+      testMesh.userData.drag = "draggable";
       testMesh.position.y = Math.random() * 5 + 0.5;
       testMesh.position.x = -Math.random() * 5;
       testMesh.position.z = -Math.random() * 5;
