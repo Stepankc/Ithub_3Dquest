@@ -6,8 +6,10 @@ import Controls from "./Controls.js";
 import Environment from "./Environment.js";
 import Fox from "./Fox.js";
 import Raycaster from "./Raycaster.js";
+import Counter from "./Counter.js";
 import Zones from "./Zones/Zones.js";
 import Physics from "./Physics.js";
+import * as THREE from "three";
 
 export default class World {
   constructor() {
