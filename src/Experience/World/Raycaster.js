@@ -11,15 +11,19 @@ export default class Raycaster {
     this.renderer = this.experience.renderer;
     this.sizes = this.experience.sizes;
     this.time = this.experience.time;
+    this.actions = this.experience.world.controls.actions;
+
+    console.log(this.actions);
 
     this.raycaster = new THREE.Raycaster();
     this.pointer = new THREE.Vector2();
     this.resize();
     this.pointer.cross;
     this.intersect = null;
+    this.rotate();
 
     this.radius = new THREE.Mesh(
-      new THREE.SphereGeometry(6, 20, 20),
+      new THREE.SphereGeometry(2, 20, 20),
       (new THREE.Material().transparent = true),
       (new THREE.Material().opacity = 0.0)
     );
@@ -45,6 +49,12 @@ export default class Raycaster {
     this.pointer.y = 0;
   }
 
+  rotate(side) {
+    if (this.intersect != null) {
+      this.intersect.geometry.rotateY(side * 0.015)
+    }
+  }
+
   render() {
     // update the picking ray with the camera and pointer position
     this.raycaster.setFromCamera(this.pointer, this.camera.instance);
@@ -52,6 +62,12 @@ export default class Raycaster {
     this.radius.position.x = this.camera.instance.position.x;
     this.radius.position.y = this.camera.instance.position.y;
     this.radius.position.z = this.camera.instance.position.z;
+ 
+    if (this.actions.rotateLeft) {
+      this.rotate(-1)
+    } else if (this.actions.rotateRight) {
+      this.rotate(1)
+    }
 
     if (this.intersect != null) {
       for (let o of this.intersects) {
@@ -67,7 +83,7 @@ export default class Raycaster {
 
     this.intersects = this.raycaster.intersectObjects(
       this.scene.children,
-      false
+      true
     );
   }
 
@@ -77,7 +93,7 @@ export default class Raycaster {
 
   drag() {
 
-    var reset = () => {
+    var reset = (e) => {
       this.intersect = null;
       dragging = false;
     }
@@ -85,22 +101,17 @@ export default class Raycaster {
     var dragging = false;
 
     window.addEventListener("click", (event) => {
-      if (this.intersects.length > 0) {
-        if (!dragging) {
-          if (this.intersects[0].object != this.radius) {
-            this.intersect = this.intersects[0].object;
-          } else {
-            this.intersect = this.intersects[1].object;
-          }
-          if (this.intersect.userData == "draggable") {
+      if (this.intersects.length > 0 && !dragging && event.button == 0) {
+        for (let i = 0; i < this.intersects.length; i++) {
+          if (this.intersects[i].object.userData.drag == "draggable") {
+            this.intersect = this.intersects[i].object;
+            this.intersect.geometry.rotateY(Math.abs(this.intersect.quaternion.y) - Math.abs(this.camera.instance.quaternion.y));
             console.log(this.intersect);
             dragging = true;
-          } else {
-            reset()
           }
-        } else {
-          reset()
         }
+      } else {
+        reset()
       }
     });
   }
