@@ -13,6 +13,8 @@ export default class Controls extends EventEmitter {
       down: false,
       left: false,
       brake: false,
+      rotateLeft: false,
+      rotateRight: false,
     };
   }
   setKeyboardControls() { 
@@ -39,6 +41,14 @@ export default class Controls extends EventEmitter {
             case "KeyA":
               this.actions.left = true;
               break;
+            
+            case "KeyQ":
+              this.actions.rotateLeft = true;
+              break;
+            
+            case "KeyE":
+              this.actions.rotateRight = true;
+              break;
           }
         },
 
@@ -62,6 +72,14 @@ export default class Controls extends EventEmitter {
             case "ArrowLeft":
             case "KeyA":
               this.actions.left = false;
+              break;
+            
+            case "KeyQ":
+              this.actions.rotateLeft = false;
+              break;
+            
+            case "KeyE":
+              this.actions.rotateRight = false;
               break;
           }
         },
