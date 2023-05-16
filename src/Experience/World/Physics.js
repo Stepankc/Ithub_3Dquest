@@ -24,6 +24,8 @@ export default class Physics {
 
     this.setWorld();
     this.userSphere();
+    this.setModels();
+    this.setMaterials();
     this.ground();
     this.test();
 
@@ -31,12 +33,14 @@ export default class Physics {
       this.world.step(1 / 60, this.time.delta, 3);
       if (this.sphere.userData.drag == "draggable") {
         this.sphere.position.copy(this.testSphereBody.position);
+        this.testSphereBody.collisionResponse = true
       } else if (this.sphere.userData.drag == "dragging") {
         this.testSphereBody.position.copy(this.sphere.position);
         this.testSphereBody.velocity.setZero()
         this.testSphereBody.initVelocity.setZero()
         this.testSphereBody.angularVelocity.setZero()
         this.testSphereBody.initAngularVelocity.setZero()
+        this.testSphereBody.collisionResponse = false
       }
     });
   }
@@ -126,6 +130,64 @@ export default class Physics {
     this.sphere.userData.drag = "draggable";
   }
 
+  setModels() {
+    this.models = {};
+    this.models.container = new THREE.Object3D();
+    this.models.container.visible = false;
+    this.models.materials = {};
+    this.models.materials.static = new THREE.MeshBasicMaterial({
+      color: 0x0000ff,
+      wireframe: true,
+    });
+    this.models.materials.dynamic = new THREE.MeshBasicMaterial({
+      color: 0xff0000,
+      wireframe: true,
+    });
+    this.models.materials.dynamicSleeping = new THREE.MeshBasicMaterial({
+      color: 0xffff00,
+      wireframe: true,
+    });
+
+    if (this.debug.active) {
+      this.debugFolder
+        .add(this.models.container, "visible")
+        .name("modelsVisible");
+    }
+  }
+
+  setMaterials() {
+    this.materials = {};
+
+    // All materials
+    this.materials.items = {};
+    this.materials.items.floor = new CANNON.Material("floorMaterial");
+    this.materials.items.dummy = new CANNON.Material("dummyMaterial");
+    this.materials.items.wheel = new CANNON.Material("wheelMaterial");
+    // Contact between materials
+    this.materials.contacts = {};
+
+    this.materials.contacts.floorDummy = new CANNON.ContactMaterial(
+      this.materials.items.floor,
+      this.materials.items.dummy,
+      { friction: 0.05, restitution: 0.3, contactEquationStiffness: 1000 }
+    );
+    this.world.addContactMaterial(this.materials.contacts.floorDummy);
+
+    this.materials.contacts.dummyDummy = new CANNON.ContactMaterial(
+      this.materials.items.dummy,
+      this.materials.items.dummy,
+      { friction: 0.5, restitution: 0.3, contactEquationStiffness: 1000 }
+    );
+    this.world.addContactMaterial(this.materials.contacts.dummyDummy);
+
+    this.materials.contacts.floorWheel = new CANNON.ContactMaterial(
+      this.materials.items.floor,
+      this.materials.items.wheel,
+      { friction: 0.3, restitution: 0, contactEquationStiffness: 1000 }
+    );
+    this.world.addContactMaterial(this.materials.contacts.floorWheel);
+  }
+
   addObject(_options) {
     const collision = {
       model: {
@@ -133,6 +195,7 @@ export default class Physics {
         container: new THREE.Object3D(),
       },
     };
+    console.log(this.models.container);
     this.models.container.add(collision.model.container);
 
     collision.children = [];
