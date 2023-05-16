@@ -52,5 +52,19 @@ export default class Map {
       rotation: new THREE.Euler(0, 0, -0.2),
       mass: 0.7,
     });
+    this.objects.add({
+      base: this.resources.items.aText.scene,
+      collision: this.resources.items.aCollision.scene,
+      offset: new THREE.Vector3(0, 2, 0),
+      rotation: new THREE.Euler(0, 0, -0.2),
+      mass: 0.7,
+    });
+    this.objects.add({
+      base: this.resources.items.aText.scene,
+      collision: this.resources.items.aCollision.scene,
+      offset: new THREE.Vector3(0, 10, 0),
+      rotation: new THREE.Euler(0, 0, -0.2),
+      mass: 0.7,
+    });
   }
 }
