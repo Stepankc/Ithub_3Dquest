@@ -9,6 +9,7 @@ import Resources from "./Utils/Resources.js";
 import sources from "./sources.js";
 import Stats from "stats.js";
 import Physics from "./World/Physics.js";
+import Controls from "./World/Controls.js";
 
 export default class Experience {
   static instance = null;
@@ -38,6 +39,7 @@ export default class Experience {
     this.scene = new THREE.Scene();
     this.resources = new Resources(sources);
     this.physics = new Physics()
+    this.controls = new Controls()
     this.camera = new Camera(this.physics.sphereBody);
     this.renderer = new Renderer();
     this.world = new World();
