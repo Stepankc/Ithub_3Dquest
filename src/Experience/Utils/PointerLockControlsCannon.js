@@ -1,12 +1,11 @@
 import * as THREE from "three";
 import * as CANNON from "cannon-es";
-import Controls from "../world/Controls.js";
+import Controls from "../World/Controls";
 class PointerLockControlsCannon extends THREE.EventDispatcher {
   constructor(camera, cannonBody) {
     super();
-    this.Controls = new Controls();
     this.enabled = false;
-
+    this.controls = new Controls()
     this.cannonBody = cannonBody;
 
     // var eyeYPos = 2 // eyes are 2 meters above the ground
@@ -53,8 +52,8 @@ class PointerLockControlsCannon extends THREE.EventDispatcher {
     document.addEventListener("mousemove", this.onMouseMove);
     document.addEventListener("pointerlockchange", this.onPointerlockChange);
     document.addEventListener("pointerlockerror", this.onPointerlockError);
-    document.addEventListener("keydown", this.Controls.keyboard.events.keyDown);
-    document.addEventListener("keyup", this.Controls.keyboard.events.keyUp);
+    document.addEventListener("keydown", this.controls.keyboard.events.keyDown);
+    document.addEventListener("keyup", this.controls.keyboard.events.keyUp);
   }
 
   disconnect() {
@@ -63,9 +62,9 @@ class PointerLockControlsCannon extends THREE.EventDispatcher {
     document.removeEventListener("pointerlockerror", this.onPointerlockError);
     document.removeEventListener(
       "keydown",
-      this.Controls.keyboard.events.keyDown
+      this.controls.keyboard.events.keyDown
     );
-    document.removeEventListener("keyup", this.Controls.keyboard.events.keyUp);
+    document.removeEventListener("keyup", this.controls.keyboard.events.keyUp);
   }
 
   dispose() {
@@ -122,7 +121,7 @@ class PointerLockControlsCannon extends THREE.EventDispatcher {
     return vector;
   }
 
-  update(delta,camera) {
+  update(delta, camera) {
     if (this.enabled === false) {
       return;
     }
@@ -132,17 +131,17 @@ class PointerLockControlsCannon extends THREE.EventDispatcher {
 
     this.inputVelocity.set(0, 0, 0);
 
-    if (this.Controls.actions.up) {
+    if (this.controls.actions.up) {
       this.inputVelocity.z = -this.velocityFactor * delta;
     }
-    if (this.Controls.actions.down) {
+    if (this.controls.actions.down) {
       this.inputVelocity.z = this.velocityFactor * delta;
     }
 
-    if (this.Controls.actions.left) {
+    if (this.controls.actions.left) {
       this.inputVelocity.x = -this.velocityFactor * delta;
     }
-    if (this.Controls.actions.right) {
+    if (this.controls.actions.right) {
       this.inputVelocity.x = this.velocityFactor * delta;
     }
 
