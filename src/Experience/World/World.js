@@ -5,6 +5,7 @@ import Map from "./Map.js";
 import Environment from "./Environment.js";
 import Raycaster from "./Raycaster.js";
 import Zones from "./Zones/Zones.js";
+import Objects from "./Objects.js";
 
 export default class World {
   constructor() {
@@ -45,6 +46,7 @@ export default class World {
   createWorld() {
     this.setFloor();
     this.setZones();
+    this.setObjects();
     this.setEnvironment();
     this.setMap();
   }
@@ -65,6 +67,11 @@ export default class World {
   setMap() {
     this.map = new Map();
     this.scene.add(this.map.container);
+  }
+
+  setObjects() {
+    this.objects = new Objects();
+    this.scene.add(this.objects.container);
   }
 
   update() {
