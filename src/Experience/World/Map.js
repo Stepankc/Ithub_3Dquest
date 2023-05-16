@@ -34,6 +34,8 @@ export default class Map {
     this.scene.add(this.testMesh, this.testMesh2);
     this.testMesh2.position.x = 6;
     this.testMesh.name = "mesh1";
+    this.testMesh.userData.drag = "draggable"
+    this.testMesh2.userData.drag = "draggable"
     this.testMesh2.name = "mesh2";
   }
   setZones() {

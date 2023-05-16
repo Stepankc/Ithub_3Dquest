@@ -4,7 +4,13 @@ import Floor from "./Floor.js";
 import Map from "./Map.js";
 import Environment from "./Environment.js";
 import Raycaster from "./Raycaster.js";
+import Counter from "./Counter.js";
 import Zones from "./Zones/Zones.js";
+<<<<<<< HEAD
+=======
+import Physics from "./Physics.js";
+import * as THREE from "three";
+>>>>>>> b3d4860f1518925c6d5809545a330ef2d3493462
 
 export default class World {
   constructor() {
@@ -27,7 +33,7 @@ export default class World {
         new THREE.BoxGeometry(1, 1, 1),
         new THREE.MeshStandardMaterial({ color: Math.random() * 0xffffff })
       );
-      testMesh.userData = "draggable";
+      testMesh.userData.drag = "draggable";
       testMesh.position.y = Math.random() * 5 + 0.5;
       testMesh.position.x = -Math.random() * 5;
       testMesh.position.z = -Math.random() * 5;
