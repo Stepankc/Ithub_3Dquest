@@ -33,14 +33,14 @@ export default class Physics {
       this.world.step(1 / 60, this.time.delta, 3);
       if (this.sphere.userData.drag == "draggable") {
         this.sphere.position.copy(this.testSphereBody.position);
-        this.testSphereBody.collisionResponse = true
+        this.testSphereBody.collisionResponse = true;
       } else if (this.sphere.userData.drag == "dragging") {
         this.testSphereBody.position.copy(this.sphere.position);
-        this.testSphereBody.velocity.setZero()
-        this.testSphereBody.initVelocity.setZero()
-        this.testSphereBody.angularVelocity.setZero()
-        this.testSphereBody.initAngularVelocity.setZero()
-        this.testSphereBody.collisionResponse = false
+        this.testSphereBody.velocity.setZero();
+        this.testSphereBody.initVelocity.setZero();
+        this.testSphereBody.angularVelocity.setZero();
+        this.testSphereBody.initAngularVelocity.setZero();
+        this.testSphereBody.collisionResponse = false;
       }
     });
   }
@@ -126,6 +126,7 @@ export default class Physics {
     );
     this.sphere.castShadow = true;
     this.sphere.position.y = 5;
+    this.sphere.fixedRotation = true;
     this.scene.add(this.sphere);
     this.sphere.userData.drag = "draggable";
   }
@@ -195,7 +196,6 @@ export default class Physics {
         container: new THREE.Object3D(),
       },
     };
-    console.log(this.models.container);
     this.models.container.add(collision.model.container);
 
     collision.children = [];
@@ -216,6 +216,7 @@ export default class Physics {
 
     collision.body.allowSleep = true;
     collision.body.sleepSpeedLimit = 0.01;
+    collision.body.fixedRotation = true;
     if (_options.sleep) {
       collision.body.sleep();
     }
@@ -367,7 +368,7 @@ export default class Physics {
         collision.body.sleep();
       }
     };
-
+    console.log(collision);
     return collision;
   }
 
