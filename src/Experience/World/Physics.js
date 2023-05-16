@@ -29,7 +29,15 @@ export default class Physics {
 
     this.time.on("tick", () => {
       this.world.step(1 / 60, this.time.delta, 3);
-      this.sphere.position.copy(this.testSphereBody.position);
+      if (this.sphere.userData.drag == "draggable") {
+        this.sphere.position.copy(this.testSphereBody.position);
+      } else if (this.sphere.userData.drag == "dragging") {
+        this.testSphereBody.position.copy(this.sphere.position);
+        this.testSphereBody.velocity.setZero()
+        this.testSphereBody.initVelocity.setZero()
+        this.testSphereBody.angularVelocity.setZero()
+        this.testSphereBody.initAngularVelocity.setZero()
+      }
     });
   }
 
@@ -97,7 +105,7 @@ export default class Physics {
   }
 
   test() {
-    this.sphereShape = new CANNON.Sphere(2);
+    this.sphereShape = new CANNON.Sphere(0.5);
     this.testSphereBody = new CANNON.Body({
       mass: 1,
       position: new CANNON.Vec3(0, 3, 0),
@@ -106,7 +114,7 @@ export default class Physics {
     this.world.addBody(this.testSphereBody);
 
     this.sphere = new THREE.Mesh(
-      new THREE.SphereGeometry(2, 32, 32),
+      new THREE.SphereGeometry(0.5, 32, 32),
       new THREE.MeshStandardMaterial({
         metalness: 0.3,
         roughness: 0.4,
