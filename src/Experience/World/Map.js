@@ -20,8 +20,8 @@ export default class Map {
     this.store = this.resources.items.storeModel.scene;
     console.log(this.store);
     this.scene.add(this.store);
-    this.store.scale.set(0.55, 0.25, 0.55);
-    this.store.position.set(-1, -10, 0);
+    // this.store.scale.set(0.15, 0.15, 0.15);
+    this.store.position.set(0, -5, 0);
   }
   setTriggerMesh() {
     //test mesh
@@ -45,25 +45,12 @@ export default class Map {
     this.zones.add({ x: 10, y: 0 }, { x: 4, y: 5 }, this.testMesh2);
   }
   setDynamic() {
+    this.resources.items.aText.scene.children[0].userData.drag = "draggable"
     this.objects.add({
       base: this.resources.items.aText.scene,
       collision: this.resources.items.aCollision.scene,
-      offset: new THREE.Vector3(0, 5, 0),
-      rotation: new THREE.Euler(0, 0, -0.2),
-      mass: 0.7,
-    });
-    this.objects.add({
-      base: this.resources.items.aText.scene,
-      collision: this.resources.items.aCollision.scene,
-      offset: new THREE.Vector3(0, 2, 0),
+      offset: new THREE.Vector3(5, 1, 0),
       rotation: new THREE.Euler(0, 0, 0),
-      mass: 0.7,
-    });
-    this.objects.add({
-      base: this.resources.items.aText.scene,
-      collision: this.resources.items.aCollision.scene,
-      offset: new THREE.Vector3(0, 10, 0),
-      rotation: new THREE.Euler(0, 0, -0.2),
       mass: 0.7,
     });
   }
