@@ -97,7 +97,7 @@ export default class Objects {
       for (const _mergeItemName in this.merge.items) {
         const mergeItem = this.merge.items[_mergeItemName];
 
-        mergeItem.geometry = mergeGeometries(mergeItem.geometriesToMerge); // Should add original geometry
+        mergeItem.geometry = mergeBufferGeometries(mergeItem.geometriesToMerge); // Should add original geometry
         mergeItem.mesh.geometry = mergeItem.geometry;
       }
     };

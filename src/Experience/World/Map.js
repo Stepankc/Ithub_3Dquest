@@ -56,7 +56,7 @@ export default class Map {
       base: this.resources.items.aText.scene,
       collision: this.resources.items.aCollision.scene,
       offset: new THREE.Vector3(0, 2, 0),
-      rotation: new THREE.Euler(0, 0, -0.2),
+      rotation: new THREE.Euler(0, 0, 0),
       mass: 0.7,
     });
     this.objects.add({
