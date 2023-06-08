@@ -52,7 +52,8 @@ export default class Raycaster {
 
   rotateV(side) {
     if (this.intersect != null) {
-      this.intersect.geometry.rotateX(side * 0.7854)
+      this.intersect.geometry.rotateX(side * 1.5708)
+      // this.intersect.geometry.rotateX(side * 0.7854)
     }
   }
 
@@ -126,7 +127,7 @@ export default class Raycaster {
         for (let i = 0; i < this.intersects.length; i++) {
           if (this.intersects[i].object.userData.drag == "draggable") {
             this.intersect = this.intersects[i].object;
-            this.intersect.geometry.rotateY(Math.abs(this.intersect.quaternion.y) - Math.abs(this.camera.instance.quaternion.y));
+            // this.intersect.geometry.rotateY(Math.abs(this.intersect.quaternion.y) - Math.abs(this.camera.instance.quaternion.y));
             console.log(this.intersect);
             dragging = true;
           }
