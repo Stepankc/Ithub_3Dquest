@@ -15,6 +15,7 @@ export default class Controls extends EventEmitter {
       brake: false,
       rotateLeft: false,
       rotateRight: false,
+      shift: false,
     };
   }
   setKeyboardControls() { 
@@ -49,6 +50,10 @@ export default class Controls extends EventEmitter {
             case "KeyE":
               this.actions.rotateRight = true;
               break;
+
+            case "ShiftLeft":
+              this.actions.shift = true;
+              break;
           }
         },
 
@@ -80,6 +85,10 @@ export default class Controls extends EventEmitter {
             
             case "KeyE":
               this.actions.rotateRight = false;
+              break;
+
+            case "ShiftLeft":
+              this.actions.shift = false;
               break;
           }
         },

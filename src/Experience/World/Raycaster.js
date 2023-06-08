@@ -20,7 +20,8 @@ export default class Raycaster {
     this.resize();
     this.pointer.cross;
     this.intersect = null;
-    this.rotate();
+    this.rotateH();
+    this.rotateV();
 
     this.radius = new THREE.Mesh(
       new THREE.SphereGeometry(2, 20, 20),
@@ -49,9 +50,15 @@ export default class Raycaster {
     this.pointer.y = 0;
   }
 
-  rotate(side) {
+  rotateV(side) {
     if (this.intersect != null) {
-      this.intersect.geometry.rotateY(side * 0.015)
+      this.intersect.geometry.rotateX(side * 0.7854)
+    }
+  }
+
+  rotateH(side) {
+    if (this.intersect != null) {
+      this.intersect.geometry.rotateY(side * 0.7854)
     }
   }
 
@@ -64,10 +71,24 @@ export default class Raycaster {
     this.radius.position.z = this.camera.instance.position.z;
  
     if (this.actions.rotateLeft) {
-      this.rotate(-1)
+      if (this.actions.shift) {
+        console.log("down");
+        this.rotateV(-1)
+      } else {
+        console.log("left");
+        this.rotateH(-1)
+      }
+      this.actions.rotateLeft = false
     } else if (this.actions.rotateRight) {
-      this.rotate(1)
-    }
+      if (this.actions.shift) {
+        console.log("up");
+        this.rotateV(1)
+      } else {
+        console.log("right");
+        this.rotateH(1)
+      }
+      this.actions.rotateRight = false
+    } 
 
     if (this.intersect != null) {
       for (let o of this.intersects) {
