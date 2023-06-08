@@ -223,11 +223,6 @@ export default class Objects {
       _child.position.sub(object.collision.center);
     }
 
-    // Shadow
-    // Add shadow
-    if (_options.shadow) {
-      this.shadows.add(object.container, _options.shadow);
-    }
 
     // Time tick event
     if (_options.mass > 0) {
