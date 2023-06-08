@@ -121,7 +121,7 @@ class PointerLockControlsCannon extends THREE.EventDispatcher {
     return vector;
   }
 
-  update(delta, camera) {
+  update(delta) {
     if (this.enabled === false) {
       return;
     }
