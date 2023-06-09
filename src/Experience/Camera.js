@@ -1,16 +1,17 @@
 import * as THREE from "three";
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
-import { PointerLockControls } from "three/examples/jsm/controls/PointerLockControls.js";
+import { PointerLockControlsCannon } from "./Utils/PointerLockControlsCannon.js";
 import Experience from "./Experience.js";
 
 export default class camera {
-  constructor() {
+  constructor(body) {
     this.experience = new Experience();
     this.sizes = this.experience.sizes;
     this.scene = this.experience.scene;
     this.canvas = this.experience.canvas;
     this.debug = this.experience.debug;
     this.startScreen = this.experience.startScreen;
+    this.delta = this.experience.time.delta;
+    this.body = body;
 
     //Debug
     if (this.debug.active) {
@@ -26,12 +27,11 @@ export default class camera {
 
   setInstance() {
     this.instance = new THREE.PerspectiveCamera(
-      50,
+      75,
       this.sizes.width / this.sizes.height,
       0.1,
-      100
+      1000
     );
-    this.instance.position.set(0, 3, 15);
     this.scene.add(this.instance);
 
     //Debug
@@ -49,20 +49,23 @@ export default class camera {
   }
 
   setPointerLockControls() {
-    this.firstConrol = new PointerLockControls(this.instance, this.canvas);
+    this.firstConrol = new PointerLockControlsCannon(this.instance, this.body);
+
+    this.scene.add(this.firstConrol.getObject());
+
     this.startScreen.addEventListener("click", () => {
       this.firstConrol.lock();
     });
 
     this.firstConrol.addEventListener("lock", () => {
+      this.firstConrol.enabled = true;
       this.startScreen.style.display = "none";
     });
 
     this.firstConrol.addEventListener("unlock", () => {
-      this.startScreen.style.display = "block";
+      this.firstConrol.enabled = false;
+      this.startScreen.style.display = null;
     });
-
-    this.scene.add(this.firstConrol.getObject());
   }
 
   resize() {
@@ -70,5 +73,7 @@ export default class camera {
     this.instance.updateProjectionMatrix();
   }
 
-  update() {}
+  update() {
+    this.firstConrol.update(this.delta, this.instance);
+  }
 }

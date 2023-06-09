@@ -22,13 +22,18 @@ export default [
     path: "textures/dirt/normal.jpg",
   },
   {
-    name: "foxModel",
-    type: "gltfModel",
-    path: "models/Fox/glTF/Fox.gltf",
-  },
-  {
     name: "storeModel",
     type: "gltfModel",
     path: "models/store1.glb",
+  },
+  {
+    name: "aText",
+    type: "gltfModel",
+    path: "models/A.glb",
+  },
+  {
+    name: "aCollision",
+    type: "gltfModel",
+    path: "models/ACollision.glb",
   },
 ];
