@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import * as CANNON from "cannon-es";
+import * as CANNON from "cannon";
 import Controls from "../World/Controls";
 class PointerLockControlsCannon extends THREE.EventDispatcher {
   constructor(camera, cannonBody) {
