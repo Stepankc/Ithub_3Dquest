@@ -1,9 +1,8 @@
 import * as THREE from "three";
-import { PointerLockControlsCannon } from "./Utils/PointerLockControlsCannon.js";
 import Experience from "./Experience.js";
 
 export default class camera {
-  constructor(body) {
+  constructor() {
     this.experience = new Experience();
     this.sizes = this.experience.sizes;
     this.scene = this.experience.scene;
@@ -11,7 +10,6 @@ export default class camera {
     this.debug = this.experience.debug;
     this.startScreen = this.experience.startScreen;
     this.delta = this.experience.time.delta;
-    this.body = body;
 
     //Debug
     if (this.debug.active) {
@@ -20,9 +18,6 @@ export default class camera {
 
     //add Camera
     this.setInstance();
-
-    //add Controls
-    this.setPointerLockControls();
   }
 
   setInstance() {
@@ -48,32 +43,8 @@ export default class camera {
     }
   }
 
-  setPointerLockControls() {
-    this.firstConrol = new PointerLockControlsCannon(this.instance, this.body);
-
-    this.scene.add(this.firstConrol.getObject());
-
-    this.startScreen.addEventListener("click", () => {
-      this.firstConrol.lock();
-    });
-
-    this.firstConrol.addEventListener("lock", () => {
-      this.firstConrol.enabled = true;
-      this.startScreen.style.display = "none";
-    });
-
-    this.firstConrol.addEventListener("unlock", () => {
-      this.firstConrol.enabled = false;
-      this.startScreen.style.display = null;
-    });
-  }
-
   resize() {
     this.instance.aspect = this.sizes.width / this.sizes.height;
     this.instance.updateProjectionMatrix();
-  }
-
-  update() {
-    this.firstConrol.update(this.delta, this.instance);
   }
 }
