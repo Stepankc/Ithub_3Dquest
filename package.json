@@ -17,12 +17,13 @@
     "husky": "^8.0.3",
     "prettier": "^2.8.5",
     "sass": "^1.59.3",
-    "vite": "^4.0.4"
+    "vite": "^4.0.4",
+    "vite-plugin-glsl": "^1.1.2"
   },
   "dependencies": {
-    "cannon-es": "0.15.1",
+    "cannon": "^0.6.2",
     "lil-gui": "^0.18.1",
     "stats.js": "^0.17.0",
-    "three": "^0.150.1"
+    "three": "^0.136.0"
   }
 }

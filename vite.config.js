@@ -1,6 +1,8 @@
+import glsl from "vite-plugin-glsl";
+
 export default {
   root: "src/",
-  publicDir: "./Models/",
+  publicDir: "./public",
   base: "./",
   server: {
     host: true,
@@ -10,4 +12,6 @@ export default {
     emptyOutDir: true,
     sourcemap: true,
   },
+  plugins: [glsl()],
+  assetsInclude: ["**.glb"],
 };
