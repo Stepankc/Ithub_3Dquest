@@ -14,7 +14,7 @@ import Controls from "./World/Controls.js";
 export default class Experience {
   static instance = null;
 
-  constructor(canvas,startScreen) {
+  constructor(canvas, startScreen) {
     if (Experience.instance) {
       return Experience.instance;
     }
@@ -33,16 +33,16 @@ export default class Experience {
     this.startScreen = startScreen;
 
     //Setup
+    this.scene = new THREE.Scene();
     this.debug = new Debug();
     this.sizes = new Sizes();
     this.time = new Time();
-    this.scene = new THREE.Scene();
     this.resources = new Resources(sources);
-    this.physics = new Physics()
-    this.controls = new Controls()
-    this.camera = new Camera(this.physics.sphereBody);
+    this.camera = new Camera();
     this.renderer = new Renderer();
-    this.world = new World();
+    this.world = new World(true);
+
+    this.scene.add(this.world.container);
 
     //Sizes resize event
     this.sizes.on("resize", () => {
@@ -61,8 +61,8 @@ export default class Experience {
   }
 
   update() {
-    this.stats.update()
-    this.camera.update();
+    this.stats.update();
+    // this.camera.update();
     this.world.update();
     this.renderer.update();
   }

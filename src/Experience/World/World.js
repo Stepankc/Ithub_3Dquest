@@ -2,51 +2,53 @@ import * as THREE from "three";
 import Experience from "../Experience.js";
 import Floor from "./Floor.js";
 import Map from "./Map.js";
+import Shadows from "./Shadows";
+import Materials from "./Materials";
+import Controls from "./Controls";
+import Physics from "./Physics";
 import Environment from "./Environment.js";
 import Raycaster from "./Raycaster.js";
 import Zones from "./Zones/Zones.js";
 import Objects from "./Objects.js";
 
+let instance = null;
+
 export default class World {
-  constructor() {
+  constructor(isNewWorld) {
+    if (isNewWorld) instance = null;
+    if (instance) {
+      return instance;
+    }
+    instance = this;
+
     this.experience = new Experience();
-    this.scene = this.experience.scene;
+    this.debug = this.experience.debug;
+    this.time = this.experience.time;
+    this.sizes = this.experience.sizes;
     this.resources = this.experience.resources;
     this.camera = this.experience.camera;
     this.renderer = this.experience.renderer;
 
-    // test meshes
-    const testMesh = new THREE.Mesh(
-      new THREE.BoxGeometry(1, 1, 1),
-      new THREE.MeshStandardMaterial({ color: Math.random() * 0xffffff })
-    );
-    testMesh.position.y = 0.5;
-    this.scene.add(testMesh);
+    this.container = new THREE.Object3D();
+    this.container.matrixAutoUpdate = false;
 
-    for (let i = 0; i < 5; i++) {
-      const testMesh = new THREE.Mesh(
-        new THREE.BoxGeometry(1, 1, 1),
-        new THREE.MeshStandardMaterial({ color: Math.random() * 0xffffff })
-      );
-      testMesh.userData.drag = "draggable";
-      testMesh.position.y = Math.random() * 5 + 0.5;
-      testMesh.position.x = -Math.random() * 5;
-      testMesh.position.z = -Math.random() * 5;
-      this.scene.add(testMesh);
-    }
+    this.controls = new Controls();
 
     this.resources.on("ready", () => {
       //Setup
-      this.raycaster = new Raycaster();
       this.createWorld();
+      this.raycaster = new Raycaster();
       console.log("resources are ready");
     });
   }
 
   createWorld() {
+    this.setMaterials();
+    this.setShadows();
+    this.setPhysics();
     this.setFloor();
-    this.setZones();
     this.setObjects();
+    this.setZones();
     this.setEnvironment();
     this.setMap();
   }
@@ -55,9 +57,17 @@ export default class World {
     this.floor = new Floor();
   }
 
+  setPhysics() {
+    this.physics = new Physics(this.camera.instance);
+    this.container.add(this.physics.models.container);
+    this.time.on('tick', () => {
+      this.physics.update()
+    });
+  }
+
   setZones() {
     this.zones = new Zones();
-    this.scene.add(this.zones.container);
+    this.container.add(this.zones.container);
   }
 
   setEnvironment() {
@@ -66,15 +76,23 @@ export default class World {
 
   setMap() {
     this.map = new Map();
-    this.scene.add(this.map.container);
+    this.container.add(this.map.container);
+  }
+
+  setMaterials() {
+    this.materials = new Materials();
   }
 
   setObjects() {
     this.objects = new Objects();
-    this.scene.add(this.objects.container);
+    this.container.add(this.objects.container);
+  }
+
+  setShadows() {
+    this.shadows = new Shadows();
+    this.container.add(this.shadows.container);
   }
 
   update() {
-    if (this.fox) this.fox.update();
   }
 }
