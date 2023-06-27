@@ -1,27 +1,32 @@
 import * as THREE from "three";
 import Experience from "../Experience";
+import World from "./World";
 
 export default class Map {
   experience = new Experience();
+  world = new World()
   scene = this.experience.scene;
-  zones = this.experience.world.zones;
-  objects = this.experience.world.objects;
-  resources = this.experience.resources;
+  resources = this.world.resources;
+  objects = this.world.objects;
+  zones = this.world.zones;
 
   constructor() {
     this.container = new THREE.Object3D();
     this.container.matrixAutoUpdate = false;
+    this.setMainMap();
     this.setDynamic();
     this.setTriggerMesh();
     this.setZones();
-    this.setMainMap();
   }
   setMainMap() {
-    this.store = this.resources.items.storeModel.scene;
-    console.log(this.store);
-    this.scene.add(this.store);
-    // this.store.scale.set(0.15, 0.15, 0.15);
-    this.store.position.set(0, -5, 0);
+
+    this.objects.add({
+      base: this.resources.items.storeModel.scene,
+      collision: this.resources.items.storeCollision.scene,
+      floorShadowTexture: null,
+      offset: new THREE.Vector3(0, 0, 0),
+      mass: 0,
+    });
   }
   setTriggerMesh() {
     //test mesh
@@ -45,10 +50,10 @@ export default class Map {
     this.zones.add({ x: 10, y: 0 }, { x: 4, y: 5 }, this.testMesh2);
   }
   setDynamic() {
-    this.resources.items.aText.scene.children[0].userData.drag = "draggable"
     this.objects.add({
       base: this.resources.items.aText.scene,
       collision: this.resources.items.aCollision.scene,
+      floorShadowTexture: null,
       offset: new THREE.Vector3(5, 1, 0),
       rotation: new THREE.Euler(0, 0, 0),
       mass: 0.7,
