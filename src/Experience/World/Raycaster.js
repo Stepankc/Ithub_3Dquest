@@ -1,19 +1,19 @@
 import * as THREE from "three";
 import Experience from "../Experience.js";
+import World from "./World.js";
 
 export default class Raycaster {
   constructor() {
     this.experience = new Experience();
+    this.world = new World()
     this.scene = this.experience.scene;
-    this.world = this.experience.world;
     this.resources = this.experience.resources;
-    this.camera = this.experience.camera;
+    this.camera = this.world.physics
     this.renderer = this.experience.renderer;
     this.sizes = this.experience.sizes;
     this.time = this.experience.time;
-    this.actions = this.experience.controls.actions;
+    this.actions = this.world.controls.actions;
 
-    console.log(this.actions);
 
     this.raycaster = new THREE.Raycaster();
     this.pointer = new THREE.Vector2();
@@ -105,6 +105,7 @@ export default class Raycaster {
     window.addEventListener("click", (event) => {
       if (this.intersects.length > 0 && !dragging && event.button == 0) {
         for (let i = 0; i < this.intersects.length; i++) {
+          console.log(this.intersects[i].object);
           if (this.intersects[i].object.userData.drag == "draggable") {
             this.intersect = this.intersects[i].object;
             this.intersect.geometry.rotateY(Math.abs(this.intersect.quaternion.y) - Math.abs(this.camera.firstConrol.yawObject.quaternion.y));

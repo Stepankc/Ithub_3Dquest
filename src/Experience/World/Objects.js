@@ -1,16 +1,18 @@
 import * as THREE from "three";
 import { mergeBufferGeometries } from "three/examples/jsm/utils/BufferGeometryUtils.js";
+import World from "./World";
 import Experience from "../Experience";
 
 export default class Objects {
-  experience = new Experience();
-  time = this.experience.time;
-  physics = this.experience.physics;
+  world = new World();
+  time = this.world.time;
+  materials = this.world.materials;
+  physics = this.world.physics;
+  shadows = this.world.shadows;
 
   constructor() {
     this.container = new THREE.Object3D();
     this.container.matrixAutoUpdate = false;
-
     this.items = [];
     this.floorShadows = [];
     this.setParsers();
@@ -96,7 +98,6 @@ export default class Objects {
     this.merge.applyMerge = () => {
       for (const _mergeItemName in this.merge.items) {
         const mergeItem = this.merge.items[_mergeItemName];
-
         mergeItem.geometry = mergeBufferGeometries(mergeItem.geometriesToMerge); // Should add original geometry
         mergeItem.mesh.geometry = mergeItem.geometry;
       }
@@ -223,6 +224,11 @@ export default class Objects {
       _child.position.sub(object.collision.center);
     }
 
+    // Shadow
+    // Add shadow
+    if (_options.shadow) {
+      this.shadows.add(object.container, _options.shadow);
+    }
 
     // Time tick event
     if (_options.mass > 0) {
