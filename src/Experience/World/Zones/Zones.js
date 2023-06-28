@@ -14,8 +14,6 @@ export default class Zones {
     this.counter = this.experience.world.counter;
     this.counter = new Counter();
 
-    console.log(this.counter);
-
     this.setItems();
   }
   setItems() {

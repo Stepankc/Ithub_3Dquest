@@ -71,7 +71,6 @@ export default class Physics {
 
   setModels() {
     this.models = {};
-    console.log(this.models);
     this.models.container = new THREE.Object3D();
     this.models.container.visible = true;
     this.models.materials = {};
@@ -187,7 +186,6 @@ export default class Physics {
         container: new THREE.Object3D(),
       },
     };
-    console.log(this.models);
     this.models.container.add(collision.model.container);
 
     collision.children = [];

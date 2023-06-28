@@ -33,7 +33,7 @@ export default class World {
     this.container.matrixAutoUpdate = false;
 
     this.controls = new Controls();
-
+    
     this.resources.on("ready", () => {
       //Setup
       this.createWorld();
